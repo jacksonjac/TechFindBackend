@@ -1,6 +1,9 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export default {
     port :3000,
     mongo:{
-        uri:'mongodb://127.0.0.1:27017/Findtech'
+        uri:process.env.MONGO_URI_NAME
     }
 }
