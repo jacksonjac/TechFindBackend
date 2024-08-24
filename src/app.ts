@@ -1,8 +1,8 @@
 
 import helmet from 'helmet';
 import path from 'path'
-import connectDB from '../Config/Db.connect';
-import config from '../Config/Config';
+import connectDB from './Config/Db.connect';
+import config from './Config/Config';
 import serverConfig from './server';
 import dependencies from './Framework/Confiq/Dependencies';
 import { routes } from './Adaptors/Routers';
