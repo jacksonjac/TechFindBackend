@@ -34,6 +34,7 @@ app.use(cors({
   origin: [
     'http://localhost:4200', 
     'https://res.cloudinary.com', 
+    'https://tech-find-frontend-c9w1.vercel.app'
   ],
   credentials: true 
 }));
