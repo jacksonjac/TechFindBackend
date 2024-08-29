@@ -30,7 +30,11 @@ const app = express();
 const server = http.createServer(app);
 app.use(bodyParser.json());
 
-app.use(cors({ origin: ["https://tech-find-frontend.vercel.app"]}));
+app.use(cors({
+  origin: 'https://findtech.jacksonr.live', // or '*'
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true // if you're using cookies or authentication headers
+}));
 
  app.use(helmet());
 console.log(process.env.SESSION_SECRET)
