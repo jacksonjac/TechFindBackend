@@ -30,12 +30,21 @@ const app = express();
 const server = http.createServer(app);
 app.use(bodyParser.json());
 
-app.use(cors({
-  origin: '*',  // Allow all domains
-  credentials: true, // Set to true if you need to allow cookies or other credentials
-  methods: 'GET,POST,PUT,DELETE,OPTIONS', // Specify methods you want to allow
+// app.use(cors({
+//   origin: '*',  // Allow all domains
+//   credentials: true, // Set to true if you need to allow cookies or other credentials
+//   methods: 'GET,POST,PUT,DELETE,OPTIONS', // Specify methods you want to allow
 
+// }));
+
+app.use(cors({
+  origin: ['https://findtech.jacksonr.live'], // Specify your frontend's URL
+  credentials: true, // Allow credentials if needed
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Specify allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+  exposedHeaders: ['Content-Length', 'X-Kuma-Revision'], // Specify exposed headers if necessary
 }));
+
 
  app.use(helmet());
 console.log(process.env.SESSION_SECRET)
@@ -86,7 +95,7 @@ serverConfig(server, config).startServer();
 //socket configration start
 const io = new SocketIOServer(server, {
   cors: {
-    origin: 'http://localhost:4200', // Replace with your Angular app's URL
+    origin: ['http://localhost:4200','https://findtech.jacksonr.live'], // Replace with your Angular app's URL
     methods: ['GET', 'POST']
   }
 });
