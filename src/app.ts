@@ -36,7 +36,7 @@ app.use(cors({
   credentials: true // if you're using cookies or authentication headers
 }));
 
- app.use(helmet());
+
 console.log(process.env.SESSION_SECRET)
 
 
@@ -52,10 +52,7 @@ app.use(session({
 app.use(express.json()); // for parsing application/json
 
 app.use('/api', routes(dependencies));
-app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "https://res.cloudinary.com/;");
-  next();
-});
+
 
 serverConfig(server, config).startServer();
 
