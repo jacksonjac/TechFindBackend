@@ -31,12 +31,10 @@ const server = http.createServer(app);
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: [
-    'http://localhost:4200', 
-    'https://res.cloudinary.com', 
-    'https://tech-find-frontend-c9w1.vercel.app'
-  ],
-  credentials: true 
+  origin: '*',  // Allow all domains
+  credentials: true, // Set to true if you need to allow cookies or other credentials
+  methods: 'GET,POST,PUT,DELETE,OPTIONS', // Specify methods you want to allow
+  allowedHeaders: 'Content-Type,Authorization', // Specify headers you want to allow
 }));
 
  app.use(helmet());

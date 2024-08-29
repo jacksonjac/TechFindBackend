@@ -3,6 +3,8 @@ import { User } from "../../Database";
 export default {
   postExist: async (data: any) => {
     try {
+
+      
       // Find the user with the provided email
       const loginUser = await User.findOne({ email: data.email });
 
