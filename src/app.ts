@@ -30,7 +30,14 @@ const app = express();
 const server = http.createServer(app);
 app.use(bodyParser.json());
 
+app.use(cors({
+  origin: '*',  // Allow all domains
+  credentials: true, // Set to true if you need to allow cookies or other credentials
+  methods: 'GET,POST,PUT,DELETE,OPTIONS', // Specify methods you want to allow
 
+}));
+
+ app.use(helmet());
 console.log(process.env.SESSION_SECRET)
 
 
@@ -46,7 +53,10 @@ app.use(session({
 app.use(express.json()); // for parsing application/json
 
 app.use('/api', routes(dependencies));
-
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "https://res.cloudinary.com/;");
+  next();
+});
 
 serverConfig(server, config).startServer();
 
@@ -76,7 +86,7 @@ serverConfig(server, config).startServer();
 //socket configration start
 const io = new SocketIOServer(server, {
   cors: {
-    origin: 'https://findtech.jacksonr.live', // Replace with your Angular app's URL
+    origin: 'http://localhost:4200', // Replace with your Angular app's URL
     methods: ['GET', 'POST']
   }
 });
