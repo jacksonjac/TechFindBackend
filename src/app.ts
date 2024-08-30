@@ -38,19 +38,13 @@ app.use(bodyParser.json());
 // }));
 
 app.use(cors({
-  origin: '*', // Allow all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow common headers
-  credentials: true, // Allow credentials
+  origin: ['https://findtech.jacksonr.live', 'https://tech-find-frontend.vercel.app'], // Both frontend URLs
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 }));
-
-// Explicitly handle OPTIONS preflight requests
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*'); // Allow all origins
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.sendStatus(200); // Send OK response
-});
 
 
 
