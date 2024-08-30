@@ -38,10 +38,12 @@ app.use(bodyParser.json());
 // }));
 
 app.use(cors({
-  origin: ['https://findtech.jacksonr.live', 'https://tech-find-frontend.vercel.app'], // Add both backend and frontend URLs
-  credentials: true, 
+  origin: ['https://findtech.jacksonr.live', 'https://tech-find-frontend.vercel.app'], // Both frontend URLs
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'], // Specify the allowed headers
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 }));
 
 
