@@ -96,7 +96,7 @@ serverConfig(server, config).startServer();
 //socket configration start
 const io = new SocketIOServer(server, {
   cors: {
-    origin: ['http://localhost:4200','https://findtech.jacksonr.live'], // Replace with your Angular app's URL
+    origin: ['http://localhost:4200','https://findtech.jacksonr.live','https://tech-find-frontend.vercel.app'], // Replace with your Angular app's URL
     methods: ['GET', 'POST']
   }
 });
