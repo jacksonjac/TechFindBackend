@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 // }));
 
 app.use(cors({
-  origin: ['https://findtech.jacksonr.live', 'https://tech-find-frontend.vercel.app'], // Both frontend URLs
+  origin: ['https://findtech.jacksonr.live', 'https://tech-find-frontend.vercel.app','http://localhost:4200'], // Both frontend URLs
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
