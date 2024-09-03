@@ -39,7 +39,7 @@ export default {
 
       const today = new Date();
       const lastWeek = new Date();
-      lastWeek.setDate(today.getDate() - 7);
+      lastWeek.setDate(today.getDate() - 6);
 
       // Fetch earnings, helped customers, and pending slots count for the last 7 days
       const dailyStats = await Bookings.aggregate([
@@ -112,12 +112,20 @@ export default {
         }
       });
 
-      // Prepare the final user flow data
+      // Generate the last 7 days' dates
+      const dates = [];
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(today.getDate() - i);
+        dates.push(date.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+      }
+
+      // Prepare the user flow data with 7 days, ensuring all dates have values
       const userFlow = {
-        labels: Object.keys(mergedData),
-        helpedCustomersData: Object.values(mergedData).map(item => item.helpedCustomers),
-        dailyEarningsData: Object.values(mergedData).map(item => item.dailyEarnings),
-        pendingSlotsData: Object.values(mergedData).map(item => item.pendingCount)
+        labels: dates,
+        helpedCustomersData: dates.map(date => mergedData[date]?.helpedCustomers || 0),
+        dailyEarningsData: dates.map(date => mergedData[date]?.dailyEarnings || 0),
+        pendingSlotsData: dates.map(date => mergedData[date]?.pendingCount || 0)
       };
 
       return {
