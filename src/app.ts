@@ -189,6 +189,9 @@ io.on('connection', (socket) => {
       if (response.status) {
         // Fetch the receiver's socket ID from the NotificationUsers map
         const receiverSocketId = NotificationUsers.get(receiverId);
+
+        console.log(receiverSocketId,"this is recevier socket id ")
+        console.log(response,"this is responce of pass recevier socket id ")
         if (receiverSocketId) {
           // Emit the notification to the specific receiver socket ID
           io.to(receiverSocketId).emit('newNotification', {response});
