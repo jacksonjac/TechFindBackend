@@ -7,12 +7,12 @@ export default {
     console.log("Inside PostExit function for notification store:", NotificationData);
 
     try {
-      const { technicianId, content, userid, date } = NotificationData;
+      const { senderid, content, receiverId, date } = NotificationData;
 
       // Check if a notification from the same sender to the same receiver already exists
       const existingNotification = await Notification.findOne({
-        senderid: userid,
-        receiverId:technicianId
+        senderid: senderid,
+        receiverId:receiverId
        
       });
 
@@ -21,22 +21,14 @@ export default {
       }
 
       // Find the technician using the technicianId
-      const technician = await Technican.findById(technicianId);
-
-      if (!technician) {
-        return { status: false, message: "Technician not found", data: null };
-      }
+      
 
       // Increment the technician's like count
-      technician.Likes = (technician.Likes || 0) + 1;
-
-      // Save the updated technician document
-      await technician.save();
-
+     
       // Create a new notification document
       const newNotification = new Notification({
-        senderid: userid,
-        receiverId: technicianId,
+        senderid: senderid,
+        receiverId: receiverId,
         content: content,
         date: date,
         seen: false
@@ -44,9 +36,9 @@ export default {
 
       // Save the notification document
       await newNotification.save();
-
+      const totalNotificationCount = await Notification.countDocuments({ receiverId: receiverId });
       // Return success status with the created notification data
-      return { status: true, data: newNotification };
+      return { status: true, count: totalNotificationCount };
     } catch (error) {
       console.error("Error in PostExit function:", error);
       // Return failure status with error message

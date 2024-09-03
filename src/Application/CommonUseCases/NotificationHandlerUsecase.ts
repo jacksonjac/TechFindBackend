@@ -19,7 +19,7 @@ export const NotificationHandler = (dependencies: any) => {
                 return {
                     status: true,
                     message: "User liked  successfully",
-                    data: responseFromUserList.data
+                    count: responseFromUserList.count
                    
                 };
 

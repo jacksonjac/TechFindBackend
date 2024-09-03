@@ -177,23 +177,30 @@ io.on('connection', (socket) => {
 
   // })
 
-  socket.on('sendNotification', async (notificationData) => {
+  socket.on('sendNotification', async (notificationData, callback) => {
     try {
-
-      console.log('this is the notification data',notificationData)
-      const { senderId, receiverId, content } = notificationData;
-
-      // Save the notification to the database
-      // const notification = new Notification(notificationData);
-      // await notification.save();
-
-      // Emit the notification to the receiver
-      const receiverSocketId = NotificationUsers.get(receiverId);
-      if (receiverSocketId) {
-        io.to(receiverSocketId).emit('newNotification', notificationData);
+      console.log('Received notification data:', notificationData);
+      const { senderid, receiverId, content } = notificationData;
+  
+      // Call the handler to process the notification data and store it in the database
+      const response = await NotificationHandler(dependencies).executeFunction(notificationData);
+      console.log(response, "This is the database response to pass to the frontend");
+  
+      if (response.status) {
+        // Fetch the receiver's socket ID from the NotificationUsers map
+        const receiverSocketId = NotificationUsers.get(receiverId);
+        if (receiverSocketId) {
+          // Emit the notification to the specific receiver socket ID
+          io.to(receiverSocketId).emit('newNotification', {response});
+        }
       }
+      
+      // Execute callback with response to confirm success or failure
+      callback(response);
     } catch (error) {
       console.error('Error handling notification:', error);
+      // Execute callback with failure response
+      callback({ status: false, message: 'Error handling notification' });
     }
   });
 
