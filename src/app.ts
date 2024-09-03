@@ -17,7 +17,7 @@ import session from 'express-session';
 import { NotificationHandler } from './Application';
 
 
-
+console.log("this is the backend foleder")
 
 
 
@@ -30,12 +30,7 @@ const app = express();
 const server = http.createServer(app);
 app.use(bodyParser.json());
 
-// app.use(cors({
-//   origin: '*',  // Allow all domains
-//   credentials: true, // Set to true if you need to allow cookies or other credentials
-//   methods: 'GET,POST,PUT,DELETE,OPTIONS', // Specify methods you want to allow
 
-// }));
 
 app.use(cors({
   origin: ['https://findtech.jacksonr.live', 'https://tech-find-frontend.vercel.app','http://localhost:4200'], // Both frontend URLs
@@ -172,6 +167,24 @@ io.on('connection', (socket) => {
     }
 
   })
+
+  socket.on('sendNotification', async (notificationData) => {
+    try {
+      const { senderId, receiverId, content } = notificationData;
+
+      // Save the notification to the database
+      // const notification = new Notification(notificationData);
+      // await notification.save();
+
+      // Emit the notification to the receiver
+      const receiverSocketId = socketUsers.get(receiverId);
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit('newNotification', notificationData);
+      }
+    } catch (error) {
+      console.error('Error handling notification:', error);
+    }
+  });
 
   socket.on('disconnect', () => {
     console.log('A user disconnected');
