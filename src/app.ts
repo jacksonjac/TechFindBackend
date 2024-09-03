@@ -113,6 +113,7 @@ io.on('connection', (socket) => {
   socket.on('NotificationRegister',(id)=>{
 
     console.log('Notification  register with id:',id)
+    NotificationUsers.set(id, socket.id);
   })
 
 
