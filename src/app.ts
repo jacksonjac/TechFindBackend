@@ -99,14 +99,23 @@ const io = new SocketIOServer(server, {
     
 
 const socketUsers = new Map();
-const notificationUsers = new Map();
+const NotificationUsers = new Map()
 io.on('connection', (socket) => {
   console.log('A user connected');
+
+
 
   socket.on('register', (id) => {
     console.log('User registered with id:', id);
     socketUsers.set(id, socket.id);
   });
+
+  socket.on('NotificationRegister',(id)=>{
+
+    console.log('Notification  register with id:',id)
+  })
+
+
   socket.on('message', async (chat, callback) => {
     try {
       const { senderId, text, receiverId } = chat.message;
@@ -149,27 +158,29 @@ io.on('connection', (socket) => {
 
 
 
-  socket.on('seenmessage',async (data)=>{
+  // socket.on('seenmessage',async (data)=>{
 
-    const { userid, viewedBy, techid } = data
+  //   const { userid, viewedBy, techid } = data
 
-    console.log('Received data', data);
-      let receiversockeid 
-    if(viewedBy === 'user'){
-      receiversockeid = socketUsers.get(techid)
-    }else{
-      receiversockeid = socketUsers.get(userid)
-    }
+  //   console.log('Received data', data);
+  //     let receiversockeid 
+  //   if(viewedBy === 'user'){
+  //     receiversockeid = socketUsers.get(techid)
+  //   }else{
+  //     receiversockeid = socketUsers.get(userid)
+  //   }
 
-    console.log('recicferesokckeit ',receiversockeid)
-    if(receiversockeid !== undefined){
-      socket.to(receiversockeid).emit('seenmessage',data)
-    }
+  //   console.log('recicferesokckeit ',receiversockeid)
+  //   if(receiversockeid !== undefined){
+  //     socket.to(receiversockeid).emit('seenmessage',data)
+  //   }
 
-  })
+  // })
 
   socket.on('sendNotification', async (notificationData) => {
     try {
+
+      console.log('this is the notification data',notificationData)
       const { senderId, receiverId, content } = notificationData;
 
       // Save the notification to the database
@@ -177,7 +188,7 @@ io.on('connection', (socket) => {
       // await notification.save();
 
       // Emit the notification to the receiver
-      const receiverSocketId = socketUsers.get(receiverId);
+      const receiverSocketId = NotificationUsers.get(receiverId);
       if (receiverSocketId) {
         io.to(receiverSocketId).emit('newNotification', notificationData);
       }
@@ -194,9 +205,9 @@ io.on('connection', (socket) => {
         break;
       }
     }
-    for (const [id, socketId] of notificationUsers.entries()) {
+    for (const [id, socketId] of NotificationUsers.entries()) {
       if (socketId === socket.id) {
-        notificationUsers.delete(id);
+        NotificationUsers.delete(id);
         break;
       }
     }
