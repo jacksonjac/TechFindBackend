@@ -10,7 +10,7 @@ export default (dependencies: any) => {
          UpdateDesiController,ApproveTechController,RefuseTechController,DeleteDesignationController,getOneQuestionByIdCtrl,getAdminDashboardCtrl} = AdminControllers(dependencies);
 
   const router = express.Router();
-
+    console.log("reach admin route")
   router.put('/blockuser', blockUsercontroller); 
   router.post('/Adminlogin', loginAdminCtrl);
   router.get('/userlist', Userlistcontroller);

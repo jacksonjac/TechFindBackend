@@ -7,9 +7,11 @@ import dotenv from "dotenv";
 
 export const AddDesignation = (dependencies: any) => {
     const {AddDesignationRepo } = dependencies.repositery; // Ensure 'repository' spelling is correct
-
+       
     const executeFunction = async (designation: string) => {
         try {
+
+            console.log("addDesignation usecase ",designation)
             // Call the repository method to add the designation
             const response = await AddDesignationRepo.PostExit(designation);
             

@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 
 export default (dependecies: any) => {
+
+  console.log("add designation controller")
   const AddDesignationControll = async (req: Request, res: Response) => {
     const { AddDesignation } = dependecies.useCase;
 
