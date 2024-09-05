@@ -3,7 +3,8 @@ import { Designation } from '../../Database'; // Adjust the path to your Designa
 
 export default {
     PostExit: async (designation: string) => {
-        console.log("Inside PostExit function");
+        
+        console.log("Inside PostExit function add desingation repo");
 
         try {
             // Check if the designation already exists

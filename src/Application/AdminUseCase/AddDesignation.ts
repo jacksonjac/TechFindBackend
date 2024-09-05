@@ -18,12 +18,12 @@ export const AddDesignation = (dependencies: any) => {
             if (response.status) {
                 return {
                     status: true,
-                    message: "Successfully added designation",
+                    message: response.message,
                 };
             } else {
                 return {
                     status: false,
-                    message: "Failed to add designation",
+                    message: response.message,
                 };
             }
         } catch (error) {
