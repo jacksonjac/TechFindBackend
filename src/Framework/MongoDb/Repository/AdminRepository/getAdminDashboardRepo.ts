@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { User, Technican, Bookings, Slot } from '../../Database'; // Adjust the path to your models
+import { User, Technican, Bookings, Designation } from '../../Database'; // Adjust the path to your models
 
 export default {
   PostExit: async () => {
@@ -16,7 +16,7 @@ export default {
       // Calculate total revenue of the current month
       const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
       const endOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
-      
+
       const monthlyRevenue = await Bookings.aggregate([
         {
           $match: {
@@ -34,12 +34,30 @@ export default {
 
       const totalRevenue = monthlyRevenue.length > 0 ? monthlyRevenue[0].totalRevenue : 0;
 
-      // Pie chart data: count each type of technician
+      // Pie chart data: count each type of technician with designation names
       const technicianTypeCounts = await Technican.aggregate([
         {
           $group: {
-            _id: '$designation', // Assuming designation represents the type (e.g., Computer, Mobile, AC)
+            _id: '$designation', // Group by designation ID
             count: { $sum: 1 }
+          }
+        },
+        {
+          $lookup: {
+            from: 'designations', // Collection name in MongoDB
+            localField: '_id', // Designation ID in Technician
+            foreignField: '_id', // Designation ID in Designation collection
+            as: 'designationDetails'
+          }
+        },
+        {
+          $unwind: '$designationDetails' // Unwind the array to get the object
+        },
+        {
+          $project: {
+            _id: 0, // Do not include the original _id in the result
+            designationName: '$designationDetails.DesiName',
+            count: 1
           }
         }
       ]);
