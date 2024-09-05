@@ -34,38 +34,22 @@ export default {
 
       const totalRevenue = monthlyRevenue.length > 0 ? monthlyRevenue[0].totalRevenue : 0;
 
-      // Pie chart data: count only the three specific types of technicians
+      // Fetch counts for specific designations separately
       const specificDesignations = ['Computer Technician', 'Ac Technician', 'Mobile Technician'];
+      const designationCounts: Record<string, number> = {}; // Define the object type
 
-      const technicianTypeCounts = await Designation.aggregate([
-        {
-          $match: { DesiName: { $in: specificDesignations } } // Filter to only the three specific designations
-        },
-        {
-          $lookup: {
-            from: 'technicans', // Collection name in MongoDB
-            localField: '_id', // Designation ID in Designation collection
-            foreignField: 'designation', // Designation ID in Technician
-            as: 'technicians'
-          }
-        },
-        {
-          $project: {
-            _id: 0, // Do not include the original _id in the result
-            designationName: '$DesiName',
-            count: { $size: '$technicians' } // Count the number of technicians per designation
-          }
+      for (const designationName of specificDesignations) {
+        // Find the designation ID by its name
+        const designation = await Designation.findOne({ DesiName: designationName });
+        if (designation) {
+          // Count the technicians with this designation ID
+          const count = await Technican.countDocuments({ designation: designation._id });
+          designationCounts[designationName] = count;
+        } else {
+          // If designation is not found, set count to 0
+          designationCounts[designationName] = 0;
         }
-      ]);
-
-      // Ensure the result contains all three specific designations, even if some have a count of 0
-      const allDesignationCounts = specificDesignations.map(designationName => {
-        const found = technicianTypeCounts.find(type => type.designationName === designationName);
-        return {
-          designationName: designationName,
-          count: found ? found.count : 0
-        };
-      });
+      }
 
       // Line graph data: count bookings for each day in the last 7 days
       const sevenDaysAgo = new Date();
@@ -86,6 +70,12 @@ export default {
         { $sort: { _id: 1 } } // Sort by date
       ]);
 
+      // Prepare result data
+      const technicianTypeCounts = specificDesignations.map(designationName => ({
+        designationName,
+        count: designationCounts[designationName]
+      }));
+
       // Return the dashboard data
       return {
         status: true,
@@ -94,7 +84,7 @@ export default {
           totalTechnicians,
           totalBookings,
           totalRevenue,
-          technicianTypeCounts: allDesignationCounts,
+          technicianTypeCounts,
           bookingsLast7Days
         }
       };
