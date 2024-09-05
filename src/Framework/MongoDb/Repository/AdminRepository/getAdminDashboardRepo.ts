@@ -34,8 +34,13 @@ export default {
 
       const totalRevenue = monthlyRevenue.length > 0 ? monthlyRevenue[0].totalRevenue : 0;
 
-      // Pie chart data: count each type of technician with designation names
+      // Pie chart data: count only the three specific types of technicians
+      const specificDesignations = ['Computer Technician', 'Ac Technician', 'Mobile Technician'];
+
       const technicianTypeCounts = await Designation.aggregate([
+        {
+          $match: { DesiName: { $in: specificDesignations } } // Filter to only the three specific designations
+        },
         {
           $lookup: {
             from: 'technicans', // Collection name in MongoDB
@@ -53,12 +58,11 @@ export default {
         }
       ]);
 
-      // If any designation does not have associated technicians, ensure a zero count is included
-      const allDesignations = await Designation.find({}, { DesiName: 1, _id: 1 });
-      const allDesignationCounts = allDesignations.map(designation => {
-        const found = technicianTypeCounts.find(type => type.designationName === designation.DesiName);
+      // Ensure the result contains all three specific designations, even if some have a count of 0
+      const allDesignationCounts = specificDesignations.map(designationName => {
+        const found = technicianTypeCounts.find(type => type.designationName === designationName);
         return {
-          designationName: designation.DesiName,
+          designationName: designationName,
           count: found ? found.count : 0
         };
       });
