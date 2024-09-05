@@ -53,6 +53,16 @@ export default {
         }
       ]);
 
+      // If any designation does not have associated technicians, ensure a zero count is included
+      const allDesignations = await Designation.find({}, { DesiName: 1, _id: 1 });
+      const allDesignationCounts = allDesignations.map(designation => {
+        const found = technicianTypeCounts.find(type => type.designationName === designation.DesiName);
+        return {
+          designationName: designation.DesiName,
+          count: found ? found.count : 0
+        };
+      });
+
       // Line graph data: count bookings for each day in the last 7 days
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -80,7 +90,7 @@ export default {
           totalTechnicians,
           totalBookings,
           totalRevenue,
-          technicianTypeCounts,
+          technicianTypeCounts: allDesignationCounts,
           bookingsLast7Days
         }
       };
