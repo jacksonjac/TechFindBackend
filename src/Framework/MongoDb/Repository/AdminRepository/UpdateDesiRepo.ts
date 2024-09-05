@@ -9,9 +9,20 @@ export default {
         try {
             // Check if the designation exists in the database
             const designationExists = await Designation.findById(designationId);
-            if (!designationExists) { // Correct the condition to check if the designation is found
+            if (!designationExists) {
                 console.error("Designation not found");
                 return { status: false, message: "Designation not found" };
+            }
+
+            // Check if the new designation name already exists in another record
+            const nameExists = await Designation.findOne({
+                DesiName: designationName,
+                _id: { $ne: designationId } // Exclude the current designation from this check
+            });
+
+            if (nameExists) {
+                console.error("Designation name already exists");
+                return { status: false, message: "Designation name already exists" };
             }
 
             // Find the designation by designationId and update specified fields
