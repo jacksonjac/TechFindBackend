@@ -67,6 +67,7 @@ import {UserAddnewSlotRepo} from '../MongoDb/Repository'
 import {Addnew_Address_SlotRepo} from '../MongoDb/Repository'
 import {getChatsByidRepo}from '../MongoDb/Repository'
 
+
 const useCase:any={
     RegisterNewUser,
     loginNewUser,
@@ -192,7 +193,8 @@ const repositery:any={
    removenotiRepo,
    AddnewMeetingRepo,
    getAllMeetingsRepo,
-   UpdatechatSeenRepo
+   UpdatechatSeenRepo,
+   
    
 
    

@@ -2,28 +2,21 @@ import { Request, Response } from "express";
 
 export default (dependencies: any) => {
   const UpdateDesiCtrl = async (req: Request, res: Response) => {
+    console.log("Reached update designation controller", req.body);
+
     const { UpdateDesignation } = dependencies.useCase;
-    const DesiId = req.query.id; // Get the user ID from query parameters
+    const DesiId = req.query.id; // Get the designation ID from query parameters
+    const { Data } = req.body; // Destructure the data object from the request body
+    const { DesiName } = Data; // Extract the DesiName from Data
 
-    
-
-    // Destructure the question data from the Data object in the request body
-    const { Data } = req.body;
-    const { DesiName } = Data;
-
-    // Construct the updated question data object
-
-    // Log the constructed updatedQuestionData to debug
     console.log("Constructed updatedQuestionData:", DesiId, DesiName);
 
     try {
-      // Pass the userId and updatedQuestionData to the use case function
       const response = await UpdateDesignation(dependencies).executeFunction(
         DesiId,
         DesiName
       );
 
-      // Send the response back to the client
       res.status(200).send(response);
     } catch (error) {
       console.error("Error in UpdateQuestionCtrl:", error);

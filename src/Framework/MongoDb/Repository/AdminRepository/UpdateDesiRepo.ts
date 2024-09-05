@@ -1,46 +1,43 @@
 import mongoose from 'mongoose';
-
 import { Designation } from '../../Database'; // Ensure this path is correct
 
 export default {
-    PostExit: async (designationId: string, designation: any) => {
-        console.log("Inside UpdateQuestion function with questionId:", designationId);
-        console.log("Data to update:", designation);
+    PostExit: async (designationId: string, designationName: any) => {
+        console.log("Inside UpdateDesignation function with designationId:", designationId);
+        console.log("Data to update:", designationName);
 
         try {
-            // Log the current questions to check if the ID exists
-            const DesignationExists = await Designation.findById(designationId);
-            if (DesignationExists) {
-                console.error("Designation is  not found");
+            // Check if the designation exists in the database
+            const designationExists = await Designation.findById(designationId);
+            if (!designationExists) { // Correct the condition to check if the designation is found
+                console.error("Designation not found");
                 return { status: false, message: "Designation not found" };
             }
-           
 
-            // Find the question by questionId and update specified fields
-            const updatedQuestion = await Designation.findByIdAndUpdate(
+            // Find the designation by designationId and update specified fields
+            const updatedDesignation = await Designation.findByIdAndUpdate(
                 designationId,
                 {
                     $set: {
-                          
-                        DesiName: designation
+                        DesiName: designationName // Update with the new designation name
                     }
                 },
                 { new: true } // To return the updated document
             );
 
-            if (!updatedQuestion) {
-                console.error("Failed to update the question");
-                return { status: false, message: "Failed to update the question" };
+            if (!updatedDesignation) {
+                console.error("Failed to update the designation");
+                return { status: false, message: "Failed to update the designation" };
             }
 
-            console.log("Updated Question:", updatedQuestion);
+            console.log("Updated Designation:", updatedDesignation);
 
-            // Return success status with updated question data
-            return { status: true, message: "Question updated successfully", data: updatedQuestion };
+            // Return success status with updated designation data
+            return { status: true, message: "Designation updated successfully", data: updatedDesignation };
         } catch (error) {
-            console.error("Error in UpdateQuestion function:", error);
+            console.error("Error in UpdateDesignation function:", error);
             // Return failure status with error message
-            return { status: false, message: "An error occurred", error };
+            return { status: false, message: "An error occurred while updating the designation", error };
         }
     }
 };
