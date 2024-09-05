@@ -6,12 +6,16 @@ import dotenv from "dotenv";
 
 
 export const DeleteDesignation = (dependencies: any) => {
+
+    console.log("reached Delet des use case")
     const { DeleteDesiRepo} = dependencies.repositery;
 
-    const executeFunction = async (userid: any) => {
+    const executeFunction = async (Desiid: any) => {
         try {
             // Fetch user data
-            const responseFromUserList = await DeleteDesiRepo.PostExit(userid);
+
+            console.log("fksjdlksjdf data deletdesi",Desiid)
+            const responseFromUserList = await DeleteDesiRepo.PostExit(Desiid);
 
             // Debugging: Log the fetched user data
             console.log("Fetched user data:", responseFromUserList);
@@ -19,7 +23,7 @@ export const DeleteDesignation = (dependencies: any) => {
             // Return the fetched user data
             return {
                 status: true,
-                message: "User data fetched successfully",
+                message: responseFromUserList.message,
                 data: responseFromUserList
             };
 
