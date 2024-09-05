@@ -35,29 +35,20 @@ export default {
       const totalRevenue = monthlyRevenue.length > 0 ? monthlyRevenue[0].totalRevenue : 0;
 
       // Pie chart data: count each type of technician with designation names
-      const technicianTypeCounts = await Technican.aggregate([
-        {
-          $group: {
-            _id: '$designation', // Group by designation ID
-            count: { $sum: 1 }
-          }
-        },
+      const technicianTypeCounts = await Designation.aggregate([
         {
           $lookup: {
-            from: 'designations', // Collection name in MongoDB
-            localField: '_id', // Designation ID in Technician
-            foreignField: '_id', // Designation ID in Designation collection
-            as: 'designationDetails'
+            from: 'technicans', // Collection name in MongoDB
+            localField: '_id', // Designation ID in Designation collection
+            foreignField: 'designation', // Designation ID in Technician
+            as: 'technicians'
           }
-        },
-        {
-          $unwind: '$designationDetails' // Unwind the array to get the object
         },
         {
           $project: {
             _id: 0, // Do not include the original _id in the result
-            designationName: '$designationDetails.DesiName',
-            count: 1
+            designationName: '$DesiName',
+            count: { $size: '$technicians' } // Count the number of technicians per designation
           }
         }
       ]);
