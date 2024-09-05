@@ -36,26 +36,23 @@ export default {
 
       // Fetch counts for specific designations separately
       const specificDesignations = ['Computer Technician', 'Ac Technician', 'Mobile Technician'];
-      const designationCounts: Record<string, number> = {}; // Define the object type
+      const designationCounts: Record<string, number> = {};
 
       for (const designationName of specificDesignations) {
-        // Find the designation ID by its name
         const designation = await Designation.findOne({ DesiName: designationName });
         if (designation) {
-          // Count the technicians with this designation ID
           const count = await Technican.countDocuments({ designation: designation._id });
           designationCounts[designationName] = count;
         } else {
-          // If designation is not found, set count to 0
           designationCounts[designationName] = 0;
         }
       }
 
-      // Line graph data: count bookings for each day in the last 7 days
+      // Get last 7 days data with all days included
       const sevenDaysAgo = new Date();
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6); // Subtract 6 days to include today
 
-      const bookingsLast7Days = await Bookings.aggregate([
+      const bookingsData = await Bookings.aggregate([
         {
           $match: {
             bookingDate: { $gte: sevenDaysAgo }
@@ -67,10 +64,25 @@ export default {
             count: { $sum: 1 }
           }
         },
-        { $sort: { _id: 1 } } // Sort by date
+        { $sort: { _id: 1 } }
       ]);
 
-      // Prepare result data
+      // Generate an array with the last 7 days as strings
+      const last7Days = Array.from({ length: 7 }, (_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        return date.toISOString().split('T')[0]; // Convert to 'YYYY-MM-DD' format
+      }).reverse();
+
+      // Merge the data from MongoDB with the last 7 days array
+      const bookingsLast7Days = last7Days.map(date => {
+        const booking = bookingsData.find(b => b._id === date);
+        return {
+          date,
+          count: booking ? booking.count : 0
+        };
+      });
+
       const technicianTypeCounts = specificDesignations.map(designationName => ({
         designationName,
         count: designationCounts[designationName]
