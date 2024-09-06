@@ -52,6 +52,7 @@ import RefreshTokenCtrl from "./CommonControllers/RefreshTokenCtrl";
 import AddnewMeetingCtrl from "./techniciansCtrl/AddnewMeetingCtrl";
 import getAllMeetingsCtrl from "./techniciansCtrl/getAllMeetingsCtrl";
 import UpdatechatseenbyidCtrl from "./CommonControllers/UpdatechatseenbyidCtrl";
+import UserProfileUpdateCtrl from "./UserControllers/UserProfileUpdateCtrl";
 
 
 
@@ -116,7 +117,8 @@ export {
     RefreshTokenCtrl,
     AddnewMeetingCtrl,
     getAllMeetingsCtrl,
-    UpdatechatseenbyidCtrl
+    UpdatechatseenbyidCtrl,
+    UserProfileUpdateCtrl
    
 
     

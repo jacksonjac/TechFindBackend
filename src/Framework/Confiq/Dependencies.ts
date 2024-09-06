@@ -10,9 +10,9 @@ import {AddNewAddress, AddNewComment,
        GetAdminDashboardData, 
        GetAllChatsbyIds,
         GetAllChatsListbyid,
-         GetAllChatsListbyTechid, GetAllCommentsbyTechid, GetAllNotibyTechid, getBookingsbyUserId, GetDashboardData, getOneTEchById, getOneUserById, getSlotDatabyId, MessageHandler, NotificationHandler, RefreshToken, RegisterNewUser, RemoveNotification, RoomidtoEmail, TechUploadImage, UpdateChatseenbyIds, UploadImage, UserAddnewSlot} from '../../Application'
+         GetAllChatsListbyTechid, GetAllCommentsbyTechid, GetAllNotibyTechid, getBookingsbyUserId, GetDashboardData, getOneTEchById, getOneUserById, getSlotDatabyId, MessageHandler, NotificationHandler, RefreshToken, RegisterNewUser, RemoveNotification, RoomidtoEmail, TechUploadImage, UpdateChatseenbyIds, UpdateUserData, UploadImage, UserAddnewSlot} from '../../Application'
 import { loginNewUser } from '../../Application'
-import { AddnewMeetingRepo, CanselSlotRepo, LogTechRepo, RegisterNewUserRepo, TechImageUploadRepo, UpdatechatSeenRepo, UserImageUploadRepo, addNewCommetRepo, blockUserRepo, chatRepo, getAdminDashboardRepo, getAllMeetingsRepo, getBookingsbyUseridRepo, getChatlistbyTechidRepo, getChatlistbyidRepo, getCommetsbyidRepo, getDashboardbyidRepo, getNotificationbyidRepo, getOneUserbyidRepo, getSlotsDatabyIdRepo, getSlotsRepo, googlenewUserRepo, notificationRepo, removenotiRepo} from '../MongoDb/Repository'
+import { AddnewMeetingRepo, CanselSlotRepo, LogTechRepo, RegisterNewUserRepo, TechImageUploadRepo, UpdateUserDataRepo, UpdatechatSeenRepo, UserImageUploadRepo, addNewCommetRepo, blockUserRepo, chatRepo, getAdminDashboardRepo, getAllMeetingsRepo, getBookingsbyUseridRepo, getChatlistbyTechidRepo, getChatlistbyidRepo, getCommetsbyidRepo, getDashboardbyidRepo, getNotificationbyidRepo, getOneUserbyidRepo, getSlotsDatabyIdRepo, getSlotsRepo, googlenewUserRepo, notificationRepo, removenotiRepo} from '../MongoDb/Repository'
 import { loginNewUserRepo} from '../MongoDb/Repository'
 import { GoogleRegister } from '../../Application'
 import { RegisterNewTech } from '../../Application'
@@ -124,7 +124,8 @@ const useCase:any={
     RefreshToken,
     addNewMeeting,
     AllMeetingLists,
-    UpdateChatseenbyIds
+    UpdateChatseenbyIds,
+    UpdateUserData
    
 
     
@@ -194,6 +195,7 @@ const repositery:any={
    AddnewMeetingRepo,
    getAllMeetingsRepo,
    UpdatechatSeenRepo,
+   UpdateUserDataRepo
    
    
 

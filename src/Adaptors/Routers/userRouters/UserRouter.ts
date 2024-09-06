@@ -10,7 +10,7 @@ export default (dependencies: any) => {
            UserAddnewSlotCtrl,
            AddNewAddressCtrl,
            getSlotDataCtrl,
-           getBookigbyUseridCtrl,UserProfileUploadController,AddNewCommentCtrl
+           getBookigbyUseridCtrl,UserProfileUploadController,AddNewCommentCtrl,UserProfileUpdateCtrl
                  } = UserControllers(dependencies);
 
 
@@ -25,7 +25,8 @@ export default (dependencies: any) => {
   router.get("/AppoinmentById",getSlotDataCtrl)
   router.get("/BookingsById",getBookigbyUseridCtrl)
   router.post('/Upload', multer.single('image'), UserProfileUploadController);
-  router.post("/Add_newComment",AddNewCommentCtrl);
+  router.post("/Add_newComment",AddNewCommentCtrl),
+  router.post("/updateUserProfile",UserProfileUpdateCtrl)
 
   return router;
 };

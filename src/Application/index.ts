@@ -1,5 +1,5 @@
 
-import {GoogleRegister,RegisterNewUser,loginNewUser,VerifyUser, UserAddnewSlot, AddNewAddress, getSlotDatabyId, getBookingsbyUserId, UploadImage, AddNewComment} from './UserUseCase'
+import {GoogleRegister,RegisterNewUser,loginNewUser,VerifyUser, UserAddnewSlot, AddNewAddress, getSlotDatabyId, getBookingsbyUserId, UploadImage, AddNewComment, UpdateUserData} from './UserUseCase'
 import { AllMeetingLists, CanselSlot, GetDashboardData, RegisterNewTech, TechUploadImage, addNewMeeting, loginNewTech } from './TechnicianUseCases'
 import { loginNewAdmin ,Adminuserlist,AdminBlockUser,AdminUnBlockUser,AdminTechlist ,AdminBlockTech,AdminUnblockTech, AdminApproveTech, DeleteDesignation, GetAdminDashboardData} from './AdminUseCase'
 import { VerifyTech } from './TechnicianUseCases'
@@ -74,6 +74,7 @@ export {
    RefreshToken,
    addNewMeeting,
    AllMeetingLists,
-   UpdateChatseenbyIds
+   UpdateChatseenbyIds,
+   UpdateUserData
    
 }

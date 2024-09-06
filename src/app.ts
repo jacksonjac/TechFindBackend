@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 
 
 app.use(cors({
-  origin: ['https://findtech.jacksonr.live', 'https://tech-find-frontend.vercel.app','http://localhost:4200'], // Both frontend URLs
+  origin: ['https://findtech.jacksonr.live', 'https://tech-find-frontend.vercel.app','http://localhost:4200'], 
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -57,7 +57,15 @@ app.use(session({
 
 app.use(express.json()); // for parsing application/json
 
+
+//router
 app.use('/api', routes(dependencies));
+
+
+
+
+
+
 app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "https://res.cloudinary.com/;");
   next();
@@ -159,24 +167,7 @@ io.on('connection', (socket) => {
 
 
 
-  // socket.on('seenmessage',async (data)=>{
-
-  //   const { userid, viewedBy, techid } = data
-
-  //   console.log('Received data', data);
-  //     let receiversockeid 
-  //   if(viewedBy === 'user'){
-  //     receiversockeid = socketUsers.get(techid)
-  //   }else{
-  //     receiversockeid = socketUsers.get(userid)
-  //   }
-
-  //   console.log('recicferesokckeit ',receiversockeid)
-  //   if(receiversockeid !== undefined){
-  //     socket.to(receiversockeid).emit('seenmessage',data)
-  //   }
-
-  // })
+  
 
   socket.on('sendNotification', async (notificationData, callback) => {
     try {

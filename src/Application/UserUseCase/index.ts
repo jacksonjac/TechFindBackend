@@ -8,6 +8,7 @@ import { getSlotDatabyId } from './getSlotDatabyId'
 import { getBookingsbyUserId } from './getBookingbyUserId'
 import { UploadImage } from './UploadUserImage'
 import { AddNewComment } from './AddNewComment'
+import { UpdateUserData } from './UpdateUserData'
 
 
 
@@ -23,6 +24,7 @@ export {
     getSlotDatabyId,
     getBookingsbyUserId,
     UploadImage,
-    AddNewComment
+    AddNewComment,
+    UpdateUserData
     
 }

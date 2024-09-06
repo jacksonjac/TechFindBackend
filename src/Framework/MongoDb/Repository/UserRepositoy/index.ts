@@ -8,6 +8,7 @@ import getSlotsDatabyIdRepo from "./getSlotsDatabyIdRepo"
 import getBookingsbyUseridRepo from "./getBookingsbyUseridRepo"
 import UserImageUploadRepo from './UserImageUploadRepo'
 import addNewCommetRepo from "./addNewCommetRepo"
+import UpdateUserDataRepo from "./UpdateUserDataRepo"
 
 
 export {
@@ -20,6 +21,7 @@ export {
     getSlotsDatabyIdRepo,
     getBookingsbyUseridRepo,
     UserImageUploadRepo,
-    addNewCommetRepo
+    addNewCommetRepo,
+    UpdateUserDataRepo
     
 }

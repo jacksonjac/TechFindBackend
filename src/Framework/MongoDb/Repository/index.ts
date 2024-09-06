@@ -12,7 +12,7 @@ import { ApproveTechRepo, DeleteDesiRepo, getAdminDashboardRepo, logAdminRepo } 
 import {AdUserlistRepo} from './AdminRepository'
 import {blockUserRepo} from './AdminRepository'
 import {UnblockUserRepo} from  "./AdminRepository"
-import { Addnew_Address_SlotRepo, addNewCommetRepo, getBookingsbyUseridRepo, getSlotsDatabyIdRepo, UserImageUploadRepo, VerifyIdRepo } from './UserRepositoy'
+import { Addnew_Address_SlotRepo, addNewCommetRepo, getBookingsbyUseridRepo, getSlotsDatabyIdRepo, UpdateUserDataRepo, UserImageUploadRepo, VerifyIdRepo } from './UserRepositoy'
 import {AdTechlistRepo} from './AdminRepository'
 import {blockTechRepo} from './AdminRepository'
 import {UnblockTechRepo} from './AdminRepository'
@@ -88,5 +88,6 @@ export {
     AddnewMeetingRepo,
     getAllMeetingsRepo,
     UpdatechatSeenRepo,
+    UpdateUserDataRepo
     
 }

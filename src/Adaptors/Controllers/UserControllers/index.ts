@@ -8,6 +8,7 @@ import getSlotDataCtrl from './getSlotDataCtrl'
 import getBookigbyUseridCtrl from './getBookigbyUseridCtrl'
 import UserProfileUploadController from './UserImageUploadCtrl'
 import AddNewCommentCtrl from './AddNewCommentCtrl'
+import UserProfileUpdateCtrl from './UserProfileUpdateCtrl'
 
 export default (dependencies:any)=>{
 
@@ -22,6 +23,7 @@ export default (dependencies:any)=>{
       getBookigbyUseridCtrl:getBookigbyUseridCtrl(dependencies),
       UserProfileUploadController:UserProfileUploadController(dependencies),
       AddNewCommentCtrl:AddNewCommentCtrl(dependencies),
+      UserProfileUpdateCtrl:UserProfileUpdateCtrl(dependencies)
       
       
   }
