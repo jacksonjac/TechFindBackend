@@ -2,15 +2,15 @@ import mongoose from 'mongoose';
 import { User } from '../../Database'; // Adjust the path to your Admin model
 
 export default {
-    PostExit: async (data: { techId: string; updatedFields: any }) => {
-        const { techId, updatedFields } = data;
+    PostExit: async (data: { userid: string; updatedFields: any }) => {
+        const { userid, updatedFields } = data;
     
-        console.log("Updating user data with techId:", techId, "and fields:", updatedFields);
+        console.log("Updating user data with techId:", userid, "and fields:", updatedFields);
     
         try {
           // Find the user by techId and update the provided fields
           const updatedUser = await User.findOneAndUpdate(
-            { _id: techId },
+            { _id: userid },
             { $set: updatedFields },
             { new: true } // To return the updated document
           );

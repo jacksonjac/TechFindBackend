@@ -8,17 +8,17 @@ export default (dependecies: any) => {
 
     
 
-    const techId = req.query.techId;
+    const userid = req.query.userid;
     // Retrieve user profile data from the request body
     const { name, email, district, phone } = req.body;
 
-    console.log("Tech ID:", techId);
+    console.log("Tech ID:", userid);
     console.log("Profile data to be updated:", { name, email, district, phone });
 
     try {
       // Prepare data for updating
       const updateData = {
-        techId: techId,
+        userid: userid,
         name: name,
         email: email,
         district: district,
